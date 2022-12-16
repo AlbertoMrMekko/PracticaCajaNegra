@@ -1,0 +1,102 @@
+Proceso obtenido de: https://www.jetbrains.com/help/idea/junit.html
+
+1. New Project
+2. Seleccionar Maven y lenguaje Java. Asegurarse de que está el JDK
+3. Poner nombre al proyecto y crear
+4. Hacer las clases en src/main/java
+5. Crear una clase de test en src/test/java por cada método a probar
+   Por ejemplo, para probar la clase Calculadora.java con métodos suma() y resta(), se crean SumaTest.java y RestaTest.java
+6. Cuando aparezca que se necesitan añadir dependencias, añadirlas automáticamente
+   Si no funciona, mirar pom.xml de PracticaCajaNegra / PracticaCajaBlanca o copiar el del final del documento
+
+En cada clase de test:
+7. Añadir import org.junit.jupiter.api.* y import static org.junit.jupiter.api.Assertions.*
+8. Declarar los atributos privados necesarios
+9. @BeforeEach y debajo public void setUp() donde inicializar los atributos privados y el código que se necesite antes de cada método test
+10. Antes de cada método poner @Test y opcionalmente @DisplayName("[texto explicativo del método]"). El nombre del método acaba con OK si 
+    debería acabar el método sin excepciones, o con KO si debería saltar una excepción
+11. Pensar los casos de prueba de cada método
+12. Usar assertEquals(salida esperada, salida real, mensaje opcional)
+    Ejemplo: assertEquals(4, Calculator.add(2, 2), "msg");
+13. También se pueden usar otros métodos como assertThrows, assertNotEquals o assertAll
+    Ejemplo: assertThrows(IllegalArgumentException.class, () -> Calculator.add(a, 2));
+14. Para ejecutar un test, darle a Run junto al test
+15. Para ejecutar todos los test de una clase a la vez, darle a Run junto a la clase
+
+
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.cajablanca</groupId>
+    <artifactId>CajaBlanca22-23</artifactId>
+    <version>0.0.1</version>
+    <packaging>jar</packaging>
+
+    <name>Editor</name>
+    <url>http://maven.apache.org</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.8.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>5.8.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-runner</artifactId>
+            <version>1.8.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-suite</artifactId>
+            <version>1.8.1</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>3.1.0</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.0</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.22.1</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
