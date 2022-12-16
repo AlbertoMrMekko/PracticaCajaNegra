@@ -1,0 +1,118 @@
+Errores detectados:
+  - depth(node) con node no contenido en arbol sale profundidad 0, deberia dar excepción
+  - content de constructor e insert deja meter strings no alfanuméricos y no deja meter ni strings con solo letras ni no strings. (en teoria deberia dejar solo alfanuméricos, sean strings o no).
+  - remove solo deja quitar nodos hoja
+  - equals solo compara las raices
+  - toList lista en profundidad en vez de en anchura
+  - iterator itera en profundidad en vez de en anchura
+  - insert deja insertar donde ya existe otro nodo, y elimina el nodo reemplazado y su subarbol
+
+Nota: Null y no tipo valen como una sola NV.
+
+Clases de equivalencia:
+==================================================================================================================================
+
+Constructor: BinaryTree(T content) => content es la raiz del arbol, la raiz debe ser string alfanumérico (vale numeros o numeros y letras)
+V1. content = string alfanumérico
+V2. content = string numérico
+NV1. content = null
+NV2. content != string
+NV3. content = string de letras.  => debería dejar meter strings de solo letras.
+NV4. content != alfanumérico    => Debería dar excepción, pero deja meter strings no alfanuméricos, como "#".
+
+==================================================================================================================================
+
+Método: (arbol.) depth()             // nodo raiz solo = profundidad 0;
+V1. arbol con raiz sin hijos
+V2. arbol con raiz con hijos
+NV1. arbol sin raiz    => no es posible eliminar la raíz del árbol. (no cuenta por tanto como clase de eq.)
+
+==================================================================================================================================
+
+Método: (arbol.) depth(Node <T> node) => devuelve la profundidad mal, siempre devuelve 1 menos de lo que debería menos cuando la profundidad es 0.
+V1. node = nodo raiz arbol
+V2. node = nodo intermedio arbol
+V3. node = nodo hoja arbol
+NV1. node no contenido en arbol   => en este caso el resultado es 0. Es un error?
+NV2. node = null (no deja meter otro tipo que no sea nodo)
+
+==================================================================================================================================
+
+Método: (arbol.) equals(BinaryTree<T> tree)
+V1. arbol = tree
+V2. tree subarbol de arbol
+V3. arbol != tree  => solo compara las raices, si son iguales da true, si no da false.
+NV1. tree = null
+
+==================================================================================================================================
+
+Método: (arbol.) getRoot()    
+V1. arbol sin hijos            // Se introduce un espacio tras el getRoot, lo que hace que los content no sean iguales.
+V2. arbol con hijos            // pero si comparamos nodos en vez de contents este problema no se da.
+NV1. raiz arbol = null         => no es posible eliminar la raíz del árbol. (no cuenta por tanto como clase de eq.)
+
+==================================================================================================================================
+
+Método: (arbol.) getSubTree(Node<T> node)
+V1. node = nodo raiz arbol
+V2. node = nodo intermedio arbol
+V3. node = nodo hoja arbol
+NV1. node = null
+NV2. node no esta en arbol
+
+==================================================================================================================================
+
+Método: (arbol.) insert(T content, Node<T> atNode, boolean atLeft)    (suponemos que no se puede sobreescribir si ya existe un nodo)
+V1. content = string alfanumérico
+V2. content = string solo números
+V3. content = string solo letras               => no deja
+V4. content != string                          => no deja
+V5. atLeft = true
+V6. atLeft = false
+V7. atNode = nodo intermedio existente en el arbol y espacio para insertar no ocupado.
+V8. atNode = nodo hoja existente en el arbol
+NV1. content = null
+NV2. content = string no alfanumérico         => si deja
+NV3. atNode = null
+NV4. atNode = nodo no existente en el arbol
+NV5. atNode = nodo intermedio existente en el arbol y espacio para insertar ocupado.  => si deja, desaparecen los hijos del nodo reemplazado
+
+==================================================================================================================================
+
+Método: (arbol.) iterator()
+V1. itera en anchura   => lo hace mal porque itera en profundidad
+
+==================================================================================================================================
+
+Método: (arbol.) remove(Node<T> node)   => solo deja eliminar si el nodo es nodo hoja.
+V1. node esta en arbol y es nodo hoja
+NV1. node = null
+NV2. node no esta en arbol
+
+==================================================================================================================================
+
+Método: (arbol.) search(T content)
+V1. content esta en arbol y es nodo raiz
+V2. content esta en arbol y es nodo intermedio
+V3. content esta en arbol y es nodo hoja
+V4. content no esta en arbol
+NV1. content = null
+
+==================================================================================================================================
+
+Método: (arbol.) size()
+V1. raiz arbol sin hijos
+V2. raiz arbol con hijos
+
+==================================================================================================================================
+
+Método: (arbol.) toList()
+V1. Lista en anchura.  => Lo hace mal porque lista en profundidad.
+
+==================================================================================================================================
+
+Método: (arbol.) toString()
+V1. arbol solo nodo raiz
+V2. arbol con nodos raiz, intermedios y hojas
+
+==================================================================================================================================
